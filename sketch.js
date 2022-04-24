@@ -161,10 +161,14 @@ let quesArray = [
 let quesWidth = 200;
 let quesHeight = 100;
 
+
 function setup() {
-    createCanvas(640, 480);
+    createCanvas(windowWidth, windowHeight);
+    console.log(windowWidth);
+    console.log(windowHeight);
     rectMode(CENTER);
     video = createCapture(VIDEO);
+    video.size(windowWidth, windowHeight);
     video.hide();
 
     poseNet = ml5.poseNet(video, modelLoaded);
@@ -198,7 +202,7 @@ function draw() {
     // pop();
 
 
-    image(video, 0, 0);
+    image(video, 0, 0, windowWidth, windowHeight);
 
     if (gameStart == false) {
         btnGameStart.show();
