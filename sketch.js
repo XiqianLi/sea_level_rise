@@ -187,15 +187,15 @@ function setup() {
     buttonHowCanI.hide();
 
     quesBlockWid = windowWidth*0.5;
-    quesBlockHei = windowWidth*0.3;
+    quesBlockHei = windowHeight*0.15;
     ansBlockWid = windowWidth*0.2;
-    ansBlockHei = windowWidth*0.1;
+    ansBlockHei = windowHeight*0.05; 
     quesTitleWid = windowWidth*0.3;
-    quesTitleHei = windowWidth*0.05;
+    quesTitleHei = windowHeight*0.03;
 
     fontSizeMini = windowWidth * 0.025
     fontSizeSmall = windowWidth * 0.03
-    fontSizeMedium = windowWidth * 0.04
+    fontSizeMedium = windowWidth * 0.035
     fontSizeLarge = windowWidth * 0.05
 
 
@@ -412,36 +412,36 @@ function drawQA(i) {
     strokeWeight(3);
 
     fill(255,255,255);
-    rect(pose.nose.x, pose.nose.y - quesBlockHei - windowHeight*0.1, quesBlockWid, quesBlockHei,30);
+    rect(pose.nose.x, pose.nose.y - windowHeight*0.25, quesBlockWid, quesBlockHei,30);
 
-    rect(pose.nose.x - windowHeight*0.06, pose.nose.y - ansBlockHei / 2 - windowHeight*0.15, ansBlockWid, ansBlockHei,100);
+    rect(pose.nose.x - windowWidth*0.12, pose.nose.y - windowHeight*0.18, ansBlockWid, ansBlockHei,100);
 
-    rect(pose.nose.x + windowHeight*0.06, pose.nose.y - ansBlockHei / 2 - windowHeight*0.15, ansBlockWid, ansBlockHei,100);
+    rect(pose.nose.x + windowWidth*0.12, pose.nose.y - windowHeight*0.18, ansBlockWid, ansBlockHei,100);
 
-    rect(pose.nose.x, pose.nose.y - quesTitleHei / 2 - windowHeight*0.3, quesTitleWid, quesTitleHei,30);
+    rect(pose.nose.x, pose.nose.y- windowHeight*0.32, quesTitleWid, quesTitleHei,30);
 
     noStroke();
     fill(0);
     textSize(fontSizeMedium);
 
     if (count < 10) {
-        text(count+1,pose.nose.x - 24, pose.nose.y - quesTitleHei / 2 - windowHeight*0.3)
+        text(count+1,pose.nose.x - windowWidth*0.05, pose.nose.y- windowHeight*0.32 + quesTitleHei*0.2)
     } else {
-        text(count,pose.nose.x - 24, pose.nose.y - quesTitleHei / 2 - windowHeight*0.3)
+        text(count,pose.nose.x - windowWidth*0.05, pose.nose.y- windowHeight*0.32 + quesTitleHei*0.2)
     }
 
-    text("/ 10",pose.nose.x -5, pose.nose.y - quesTitleHei / 2 - windowHeight*0.3)
+    text("/ 10",pose.nose.x - windowWidth*0.01, pose.nose.y- windowHeight*0.32 + quesTitleHei*0.2)
 
-    textSize(fontSizeSmall);
+    textSize(fontSizeMedium);
     text(i.ques.content,pose.nose.x, pose.nose.y - quesBlockHei*0.5 - windowHeight*0.05, windowWidth*0.3, windowHeight*0.3)
 
     textSize(fontSizeMini);
-    text(i.ansOne.content,pose.nose.x - windowHeight*0.06, pose.nose.y - ansBlockHei / 2 - windowHeight*0.15, ansBlockWid*0.8,ansBlockHei*0.8 )
-    text(i.ansTwo.content,pose.nose.x + windowHeight*0.06, pose.nose.y - ansBlockHei / 2 - windowHeight*0.15, 80,65 )
+    text(i.ansOne.content,pose.nose.x - windowHeight*0.055, pose.nose.y - ansBlockHei / 2 - windowHeight*0.15, ansBlockWid*0.8,ansBlockHei*0.8 )
+    text(i.ansTwo.content,pose.nose.x + windowHeight*0.055, pose.nose.y - ansBlockHei / 2 - windowHeight*0.15, ansBlockWid*0.8,ansBlockHei*0.8 )
 }
 
 function checkTF(i) {
-    if (pose.nose.x < windowWidth*0.3) {
+    if (pose.nose.x < windowWidth*0.2) {
         if (i.ansOne.status == 1) {
             right += 1;
             fill(100);
@@ -453,7 +453,7 @@ function checkTF(i) {
         count += 1;
         head_rotation = false;
     }
-    else if (pose.nose.x > windowWidth*0.7) {
+    else if (pose.nose.x > windowWidth*0.8) {
         if (i.ansTwo.status == 1) {
             right += 1;
             i.ansTwo.status = 2;
