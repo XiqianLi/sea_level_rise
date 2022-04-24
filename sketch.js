@@ -5,18 +5,23 @@ let right = 0;
 let wrong = 0;
 let count = 0;
 let head_rotation = false;
-let quesBlockWid = 240;
-let quesBlockHei = 120;
-let ansBlockWid = 100;
-let ansBlockHei = 50;
-let quesTitleWid = 100;
-let quesTitleHei = 30;
+let quesBlockWid;
+let quesBlockHei;
+let ansBlockWid;
+let ansBlockHei;
+let quesTitleWid;
+let quesTitleHei;
 let seaLevelImage;
 let buttonPlayAgain;
 let buttonHowCanI;
 let themeBlue = "#157EE4"
 let btnGameStart;
 let gameStart = false;
+
+let fontSizeMini;
+let fontSizeSmall;
+let fontSizeMedium;
+let fontSizeLarge;
 
 function preload() {
     seaLevelImage = loadImage('img/sealevel.png');
@@ -181,6 +186,20 @@ function setup() {
     buttonPlayAgain.hide();
     buttonHowCanI.hide();
 
+    quesBlockWid = windowWidth*0.5;
+    quesBlockHei = windowWidth*0.3;
+    ansBlockWid = windowWidth*0.2;
+    ansBlockHei = windowWidth*0.1;
+    quesTitleWid = windowWidth*0.3;
+    quesTitleHei = windowWidth*0.05;
+
+    fontSizeMini = windowWidth * 0.025
+    fontSizeSmall = windowWidth * 0.03
+    fontSizeMedium = windowWidth * 0.04
+    fontSizeLarge = windowWidth * 0.05
+
+
+
 }
 
 function gotPoses(poses) {
@@ -236,12 +255,12 @@ function draw() {
     text(wrong, 140, 140, 140, 140);
 
     // noStroke();
-    image(seaLevelImage,0,200-wrong*100,640,900);
+    image(seaLevelImage,0,windowHeight*0.7 - windowHeight*wrong*0.2,windowWidth,windowWidth*2);
     // rect(0, 480-wrong * 200, 640, wrong * 200);
 
     if (pose && gameStart) {
 
-        if (pose.nose.x>300 && pose.nose.x<340) {
+        if (pose.nose.x>windowWidth*0.45 && pose.nose.x<windowWidth*0.55) {
             head_rotation = true;
         }
 
@@ -393,36 +412,36 @@ function drawQA(i) {
     strokeWeight(3);
 
     fill(255,255,255);
-    rect(pose.nose.x, pose.nose.y - quesBlockHei -50, quesBlockWid, quesBlockHei,10);
+    rect(pose.nose.x, pose.nose.y - quesBlockHei - windowHeight*0.1, quesBlockWid, quesBlockHei,30);
 
-    rect(pose.nose.x - 60, pose.nose.y - ansBlockHei / 2 - 80, ansBlockWid, ansBlockHei,100);
+    rect(pose.nose.x - windowHeight*0.06, pose.nose.y - ansBlockHei / 2 - windowHeight*0.15, ansBlockWid, ansBlockHei,100);
 
-    rect(pose.nose.x + 60, pose.nose.y - ansBlockHei / 2 - 80, ansBlockWid, ansBlockHei,100);
+    rect(pose.nose.x + windowHeight*0.06, pose.nose.y - ansBlockHei / 2 - windowHeight*0.15, ansBlockWid, ansBlockHei,100);
 
-    rect(pose.nose.x, pose.nose.y - quesTitleHei / 2 - 210, quesTitleWid, quesTitleHei,10);
+    rect(pose.nose.x, pose.nose.y - quesTitleHei / 2 - windowHeight*0.3, quesTitleWid, quesTitleHei,30);
 
     noStroke();
     fill(0);
-    textSize(18);
+    textSize(fontSizeMedium);
 
     if (count < 10) {
-        text(count+1,pose.nose.x - 24, pose.nose.y - quesTitleHei / 2 - 205)
+        text(count+1,pose.nose.x - 24, pose.nose.y - quesTitleHei / 2 - windowHeight*0.3)
     } else {
-        text(count,pose.nose.x - 24, pose.nose.y - quesTitleHei / 2 - 205)
+        text(count,pose.nose.x - 24, pose.nose.y - quesTitleHei / 2 - windowHeight*0.3)
     }
 
-    text("/ 10",pose.nose.x -5, pose.nose.y - quesTitleHei / 2 - 205)
+    text("/ 10",pose.nose.x -5, pose.nose.y - quesTitleHei / 2 - windowHeight*0.3)
 
-    textSize(16);
-    text(i.ques.content,pose.nose.x, pose.nose.y - quesBlockHei -50, 200, 60)
+    textSize(fontSizeSmall);
+    text(i.ques.content,pose.nose.x, pose.nose.y - quesBlockHei*0.5 - windowHeight*0.05, windowWidth*0.3, windowHeight*0.3)
 
-    textSize(12);
-    text(i.ansOne.content,pose.nose.x - 50, pose.nose.y - ansBlockHei / 2 - 60, 80,65 )
-    text(i.ansTwo.content,pose.nose.x + 70, pose.nose.y - ansBlockHei / 2 - 60, 80,65 )
+    textSize(fontSizeMini);
+    text(i.ansOne.content,pose.nose.x - windowHeight*0.06, pose.nose.y - ansBlockHei / 2 - windowHeight*0.15, ansBlockWid*0.8,ansBlockHei*0.8 )
+    text(i.ansTwo.content,pose.nose.x + windowHeight*0.06, pose.nose.y - ansBlockHei / 2 - windowHeight*0.15, 80,65 )
 }
 
 function checkTF(i) {
-    if (pose.nose.x < 200) {
+    if (pose.nose.x < windowWidth*0.3) {
         if (i.ansOne.status == 1) {
             right += 1;
             fill(100);
@@ -434,7 +453,7 @@ function checkTF(i) {
         count += 1;
         head_rotation = false;
     }
-    else if (pose.nose.x > 400) {
+    else if (pose.nose.x > windowWidth*0.7) {
         if (i.ansTwo.status == 1) {
             right += 1;
             i.ansTwo.status = 2;
